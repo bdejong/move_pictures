@@ -6,14 +6,14 @@ import glob
 import os
 
 
-for filename in glob.glob("*.JPG"):
+for filename in glob.glob("DSC_*.JPG"):
     tags = exifread.process_file(open(filename, 'rb'))
     
     picture_time = datetime.datetime.strptime(str(tags['Image DateTime']), '%Y:%m:%d %H:%M:%S')
     
     picture_time = picture_time - datetime.timedelta(hours=5) # move all pictures taken before 5 o'clock into the previous day
     
-    directory_name = picture_time.strftime("%Y-%m-%d__")
+    directory_name = os.path.join("Nikon", picture_time.strftime("%Y-%m-%d__"))
     
     if not os.path.exists(directory_name):
         os.makedirs(directory_name)
